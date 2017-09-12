@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+ <head>
+
+ </head>
+ <body>
+	 <div style="width:70%; margin-right: auto; margin-left: auto">
+	 	I've been increasingly frustrated with existing <a href="https://en.wikipedia.org/wiki/Disposable_email_address">burner email</a> systems, so I thought I'd build one out as my project. I wanted a consolidated inbox where I could have many burners associated with one account, and creating/deleting burners would be super easy. Because this is a burner system I did not build in a reply feature. Also, because this is a project I did not believe the login procedure to be exceedingly important; as such, you signup and login with just your email. Very insecure, but its not like this will be out on the web. Furthermore, in case you can't tell already, I did not think style was that important for the project, given this is not an html/css class. The flow is as follows: input your email (or any random email) below, and you will be brought to an inbox screen. You can then create burners by typing in whatever address you want (so long as its not previously reserved) and then you're done! You can now send emails to that email, and they'll show up in your inbox. You can delete individual emaisl or an entire burner; deleting the burner will delete all associated emails as well.
+	 </div>
+ 	<h1>"login"</h1>
+ 	<form action='/usr/login/' method="POST">
+ 		email: <input type="email" name="email">
+ 		<input type="submit" value="Submit">
+ 	</form>
+ 	<h1> "signup"</h1>
+  	<form action='/usr/signup/' method="POST">
+ 		email: <input type="email" name="email">
+ 		<input type="submit" value="Submit">
+ 	</form>
+ </body>
+</html>

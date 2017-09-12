@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+
+from sqlalchemy import *
+import os
+import subprocess
+from multiprocessing import Process
+import signal
+from bs4 import BeautifulSoup
+import requests
+import json
+import sys
+import time
+from urllib.parse import urlsplit
+import atexit
+from server_helpers import server
+
+dbname="t1.db"
+
+if os.path.isfile(dbname):
+	print("""A database file with name {} exists already. This means you've already ran the setup script.
+You can delete the file if you want to rerun this startup script using $ sudo rm {} or if you're 
+trying to start the server instead, use $ flask run.
+		""".format(dbname, dbname))
+	sys.exit(1)
+
+
+DATABASEURI = "sqlite:///{}".format(dbname)
+
+engine = create_engine(DATABASEURI)
+
+engine.execute("""CREATE TABLE IF NOT EXISTS users (
+email text,
+PRIMARY KEY(email)
+);""")
+
+engine.execute("""CREATE TABLE IF NOT EXISTS burners (
+	burn_pattern text, 
+	email text, 
+	PRIMARY KEY(burn_pattern),
+	FOREIGN KEY(email) REFERENCES users ON DELETE CASCADE
+);""")
+
+engine.execute("""CREATE TABLE IF NOT EXISTS emails(
+	eid integer,
+	burn_pattern text,
+	efrom text,
+	subj text,
+	body text,
+	ts DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(burn_pattern) REFERENCES burners ON DELETE CASCADE,
+	PRIMARY KEY(eid)
+);""")
+serv = server()
+serv.run()
+

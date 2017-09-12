@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+ <head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ </head>
+ <body>
+	 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#newburn">
+	  Create new burner
+	</button>
+	<a class="btn btn-warning" href="/logout">logout</a>
+	<h4> Your addresses:</h4>
+	{% for a in addresses %}
+		<div style="padding-left: 5px"><a href="/view/address/{{a.address}}"> {{a.address}}</a></div>
+	{% endfor %}
+	<h4> Your emails:</h4>
+	<div>
+		<div class="container">    
+			<table class="table table-hover">
+			    <thead>
+		        	<tr>
+			        	<th>From</th>
+			        	<th>Associated burner</th>
+			        	<th>subject</th>
+			      	</tr>
+			    </thead>
+			    <tbody>
+					{% for e in emails %}
+			     		<tr>
+			        		<td>
+			        			<a href="/view/email/{{e.eid}}">
+			        				<div style="height: 100%;width:100%;">
+			        					{{e.efrom}} 
+			        				</div>
+			        			</a>
+			        		</td>
+			        		<td>
+			        			<div>
+			        			<a href="/view/email/{{e.eid}}">
+			        				<div style="height: 100%; width: 100%">
+			        					{{e.burn_pattern}}
+			        				</div>
+			        			</a>
+			        		<td>
+			        			<a href="/view/email/{{e.eid}}">
+			        				<div style="height:100%; width:100%">
+			        					{{e.subj}}
+			        				</div>
+			        			</a>
+			        		</td>
+			      		</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+
+
+
+	<div class="modal fade" id="newburn" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Create new burner</h4>
+	      </div>
+	      <div class="modal-body">
+		 	<form action='/burner/new/' method="POST">
+		 	Please input your desired pattern below:<br>
+		 		<input type="text" name="username">@mg.christopherimann.com
+		 		<input type="submit" value="Submit">
+		 	</form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+ </body>
+</html>
